@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {BlogPost} from '../dtos/blog-post';
+import {TruncatePipe} from '../pipes/truncate.pipe';
 
 @Component({
   selector: 'app-blog-post-tile',
@@ -7,15 +9,19 @@ import {Component, OnInit} from '@angular/core';
 })
 export class BlogPostTileComponent implements OnInit {
 
-  title: string;
-  summary: string;
+  @Input() blogPost: BlogPost;
+  fullSummary: string;
 
-  constructor() {
+  constructor(private truncatePipe: TruncatePipe) {
   }
 
   ngOnInit() {
-    this.title = 'Blog Title';
-    this.summary = 'Blog post summary';
+    this.fullSummary = this.blogPost.summary;
+    this.blogPost.summary = this.truncatePipe.transform(this.blogPost.summary, ['30']);
+  }
+
+  expandSummary() {
+    this.blogPost.summary = this.fullSummary;
   }
 
 }

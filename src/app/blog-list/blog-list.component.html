@@ -1,1 +1,2 @@
-<p>blog-list works!</p>
+<app-blog-post-tile *ngFor="let post of blogPostList[currentPage]" [blogPost]="post"></app-blog-post-tile>
+<app-paginator [noOfPages]="blogPostList.length" (pageNumberClick)="updatePage($event)"></app-paginator>
